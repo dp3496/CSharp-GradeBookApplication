@@ -11,14 +11,28 @@ namespace GradeBook.GradeBooks
 {
     public abstract class BaseGradeBook
     {
+        bool isWeighted;
         public string Name { get; set; }
         public List<Student> Students { get; set; }
 
         public GradeBookType Type { get; set; }
 
-        public BaseGradeBook(string name)
+        public bool IsWeighted
+        {
+            get
+            {
+                return isWeighted;
+            }
+            set
+            {
+                isWeighted = true;
+            }
+        }
+
+        public BaseGradeBook(string name, bool isWeighted)
         {
             Name = name;
+            IsWeighted = isWeighted;
             Students = new List<Student>();
         }
 
@@ -263,7 +277,7 @@ namespace GradeBook.GradeBooks
                              from type in assembly.GetTypes()
                              where type.FullName == "GradeBook.GradeBooks.StandardGradeBook"
                              select type).FirstOrDefault();
-            
+
             return JsonConvert.DeserializeObject(json, gradebook);
         }
     }
